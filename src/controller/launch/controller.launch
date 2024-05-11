@@ -1,0 +1,84 @@
+<launch>
+
+    <!-- SYSTEM MODEL -->
+    <!-- vehicle parameters-->
+
+    <?ignore
+    <param name="m"             type="double"   value="2.424" />
+    <param name="rho"             type="double"   value="1.225" />    
+    <param name="lr"            type="double"   value="0.1203" />
+    <param name="lf"            type="double"   value="0.132" />
+    <param name="Cm0"            type="double"   value="10.1305" />
+    <param name="Cm1"            type="double"   value="1.05294" />
+    <param name="C0"            type="double"   value="3.68918" />
+    <param name="C1"            type="double"   value="0.0306803" />
+    <param name="Cd_A"            type="double"   value="-0.657645" />
+    <param name="Caf"            type="double"   value="1.3958" />
+    <param name="Car"            type="double"   value="1.6775" />
+    <param name="Iz"            type="double"   value="0.04" />
+    ?>
+
+    <!-- Variables limits-->
+    
+    <!-- without integral action -->    
+    <param name="max_vel"           type="double"   value="0.6" />
+    <param name="min_vel"           type="double"   value="-0.1" />
+    <param name="dutycycle_max"     type="double"   value="0.15" />
+    <param name="dutycycle_min"     type="double"   value="0.01" />
+    
+
+    <!-- with integral action -->
+    <?ignore
+    <param name="max_vel"           type="double"   value="2.0" />
+    <param name="min_vel"           type="double"   value="-1.0" />
+    <param name="dutycycle_max"     type="double"   value="1.0" />
+    <param name="dutycycle_min"     type="double"   value="-0.1" />
+    ?>
+
+    <param name="steer_max"         type="double"   value="0.349" />
+    <param name="steer_min"         type="double"   value="-0.349" />
+    <param name="lat_e_max"         type="double"   value="0.25" />   <!-- like halfWidth-->
+    <param name="orient_e_max"      type="double"   value="0.4" />
+
+
+    <!-- PLANNER    -->
+    <param name="duty_th"       type="double"   value="0.05" />  <!-- deadzone where the wheel doesn't rotate -->
+    <param name="planning_mode" type="int"      value="1" /> <!--1: without any planner with fixed reference 2: with planner, 3: with offline planner -->
+    <param name="halfWidth"     type="double"   value="0.25" />
+    <param name="trackShape"    type="str"      value="oval_iri" />
+
+
+    <!--DYNAMIC OBSERVER-->
+    <!--<node pkg="lpv_mpc"     type="stateEstimator.py"    name="state_estimator" output="screen">
+        <param name="loopRate"  type="double"   value="100"	/>
+    </node>-->
+
+
+    <!-- CONTROL -->
+    
+    <node pkg="controller"      type="planner_controller.py"    name="control" output="screen">
+
+        <param name="Horizon"           type="int"      value="20" />
+        <param name="Hz"                type="double"   value="65" />
+        <param name="vel_ref"           type="double"   value="0.8"/>
+        <param name="lap_required"   type="int"     value="2"/>
+        <param name="integral_action"   type="bool"     value="false"/>
+        <param name="soft_constraints"  type="bool"     value="false"/>
+         <param name="trial_name"  type="string"     value="complex_model_time"/>
+         <param name="save_output"          type="bool"      value="1" />
+         <param name="non_uniform_sampling"          type="bool"      value="0" />
+    </node>
+
+    <!--node pkg="planner" type="mpc_planner.py" name="trajectory_planner" output="screen"> 
+         <param name="Planning_Track"   type="int"      value="1" /> 
+         <param name="max_vel"          type="double"   value="4.4" />
+         <param name="min_vel"          type="double"   value="-0.1" />
+         <param name="N"                type="int"      value="40" /> 
+         <param name="Hz"        type="int"      value="25" /> 
+         <param name="halfWidth"        type="double"   value="0.25" />
+         <param name="Visualization"    type="int"      value="1" />
+         <param name="Testing"          type="int"      value="1" />
+         <param name="save_output"          type="bool"      value="0" />
+    </node-->  
+
+</launch>

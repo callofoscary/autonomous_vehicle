@@ -1,0 +1,4 @@
+<launch>
+    <node name="hedge_rcv_bin" pkg="marvelmind_nav" type="hedge_rcv_bin" output="screen"/>
+    <node name="converter" pkg="marvelmind_nav" type="converter.py" output="screen"/>
+</launch>
